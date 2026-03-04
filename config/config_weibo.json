@@ -1,0 +1,118 @@
+{
+  "root_path": "/data/clz/fnd-exp/config",
+  "data_name": "weibo",
+  "image_root": "/data/clz/dataset/weibo",
+
+  "k_folds": 5,
+
+  "model_name": "distangle_1",
+  "text_encoder": "bert",
+  "text_encoder_path": "/data/qy/huggingface-model/bert-base-chinese/",
+  "text_max_len": 170,
+  "rational_encoder_path": "/data/qy/huggingface-model/bert-base-chinese/",
+  "rational_max_len": 170,
+  "img_encoder": "clip",
+  "img_encoder_path": "/data/qy/huggingface-model/chinese-clip-vit-base-patch16",
+
+  "num_classes": 2,
+  "emb_dim": 768,
+  "co_attention_dim": 128,
+
+  "epoch": 20,
+  "batchsize": 64, 
+  "num_workers": 8,
+  "prefetch_factor": 4,
+
+  "lr": 1e-4,
+  "encoder_lr": 1e-5,
+  "unfreeze_bert_layers": 3,
+  "gradient_accumulation_steps": 4,
+  "weight_decay": 0.0001,
+  "label_smoothing": 0.1,
+  "warmup_ratio": 0.1,
+  "grad_clip": 1.0,
+  "tensorboard_dir": "./tensorboard",
+  "save_param_dir": "./checkpoints",
+  "early_stop": 10,
+  "seed": 3759,
+  "gpu": "0",
+  "use_cuda": true,
+  "save_model": true,
+
+  "output_dir": "./results",
+  "info": "optimized_v1",
+  "scheduler": {
+    "mode": "max",
+    "factor": 0.5,
+    "patience": 3,
+    "min_lr": 1e-6
+  },
+  "contrastive_temperature": 0.07,
+
+  "model": {
+    "network_type":{
+      "encoder": "transformer",
+      "self_attn_shared": "transformer",
+      "cross_attn": "transformer",
+      "cross_query": "transformer"
+    },
+    "num_heads": 8,
+    "embed_dim": 128,
+    "mlp": {
+      "dims": [768, 512, 256],
+      "dropout": 0.2
+    },
+    "conv1d_kernel_size_m": 1,
+    "conv1d_kernel_size_r": 1,
+    "layer": {
+      "encoder": 2,
+      "cross_query": 2,
+      "mm": 2,
+      "mr": 2,
+      "shared": 2,
+      "m_self": 2,
+      "r_self": 2,
+      "r_p": 2
+    },
+    "drop_out": {
+      "output": 0.5,
+      "encoder": 0.3,
+      "cross_query": 0.3,
+      "mm": 0.3,
+      "mr": 0.3,
+      "shared": 0.3,
+      "m_self": 0.3,
+      "r_self": 0.3,
+      "r_p": 0.3,
+      "attn": {
+        "relu": 0.0,
+        "res": 0.0,
+        "embed": 0.2
+      },
+      "pooling": 0.2
+    },
+    "use_ffn": {
+      "encoder": true,
+      "cross_query": false,
+      "mm": false,
+      "mr": false,
+      "shared": true,
+      "m_self": false,
+      "r_self": false,
+      "r_p": false
+    },
+    "hyper_parameters": {
+      "cls": 1,
+      "recon_origin": 1,
+      "recon_specific": 1,
+      "ort": 1,
+      "contrastive": 0.1
+    }
+  },
+
+  "gnn": {
+    "hidden_dim": 256,
+    "top_k": 8,
+    "hard_prune": false
+  }
+}
